@@ -5,7 +5,7 @@ exports.getAll = async (req, res) => {
     const jugadores = await service.getAll();
     res.json(jugadores);
   } catch (err) {
-    res.status(500).json({ error: "Jugador inexistente" });
+    res.status(500).json({ error: "Error de busqueda" });
   }
 };
 

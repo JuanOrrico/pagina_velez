@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-06-2025 a las 03:41:51
+-- Tiempo de generación: 02-07-2025 a las 20:48:32
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -49,13 +49,12 @@ INSERT INTO `historia` (`descripcion`, `nombreEstadio`, `locacionEstadio`, `capa
 --
 
 CREATE TABLE `jugadores` (
-  `id` int(11) NOT NULL,
+  `id` int(5) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `apellido` varchar(30) NOT NULL,
-  `edad` int(4) NOT NULL,
-  `posicion` varchar(30) NOT NULL,
-  `trayectoria` text NOT NULL,
-  `dorsal` int(4) NOT NULL,
+  `edad` int(3) NOT NULL,
+  `posicion_id` int(3) NOT NULL,
+  `dorsal` int(3) NOT NULL,
   `imgJugadores` varchar(50) DEFAULT 'Proximamente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -63,19 +62,19 @@ CREATE TABLE `jugadores` (
 -- Volcado de datos para la tabla `jugadores`
 --
 
-INSERT INTO `jugadores` (`id`, `nombre`, `apellido`, `edad`, `posicion`, `trayectoria`, `dorsal`, `imgJugadores`) VALUES
-(1, 'Tomas', 'Marchiori', 29, 'Arquero', 'Gimnasia y Esgrima Mendoza (2013-2021) - Atlético Tucumán (2020-2021) - Atlético Tucumán (2022-2023) - Vélez Sarsfield (2024-actualidad).', 1, 'Proximamente'),
-(2, 'Randall', 'Rodriguez', 21, 'Arquero', 'Peñarol (URU) - Vélez Sarsfield.', 12, 'Proximamente'),
-(3, 'Valentin', 'Gomez', 21, 'Defensor', 'Vélez Sarsfield', 31, 'Proximamente'),
-(4, 'Emanuel', 'Mammana', 29, 'Defensor', 'River Plate- Olimpique de Lyon (FRA)- Zenit de San Petersburgo (RUS)- P.F.C Sochi (RUS)- Vélez Sarfield', 2, 'Proximamente'),
-(5, 'Elías', 'Gomez', 30, 'Defensor', 'Rosario Central- Defensa y Justicia- Rosario Central- Argentinos Juniors- River Plate - Vélez Sarsfield.', 3, 'Proximamente'),
-(6, 'Joaquin', 'Garcia', 23, 'Defensor', 'Vélez Sarsfield', 4, 'Proximamente'),
-(7, 'Damian', 'Fernandez', 24, 'Defensor', 'Vélez Sarsfield', 34, 'Proximamente'),
-(8, 'Agustin', 'Bouzat', 31, 'Mediocampista', 'Liniers BB, Boca Juniors, Defensa y Justicia, Boca Juniors, Vélez Sarsfield, Colo Colo (CHI) y Vélez Sarsfield.', 26, 'Proximamente'),
-(9, 'Christian', 'Ordoñez', 20, 'Mediocampista', 'Vélez Sarsfield', 32, 'Proximamente'),
-(10, 'Matias', 'Pellegrini', 25, 'Mediocampista', 'Estudiantes de La Plata- Inter de Miami (USA)- Estudiantes de La Plata- New York City (USA)- Vélez Sarsfield.', 11, 'Proximamente'),
-(11, 'Braian', 'Romero', 33, 'Delantero', 'Acassuso - Colón - Argentinos Juniors - Independiente - Athletico Paranaense - Defensa y Justicia - River Plate - Inter de Porto Alegre (BRA) - Xolos Tijuana (MEX) - Vélez Sarsfield.', 9, 'Proximamente'),
-(12, 'Francisco', 'Pizzini', 31, 'Delantero', 'Independiente - Olimpo BB - Defensa y Justicia - Talleres Cba - Vélez Sarsfield.', 20, 'Proximamente');
+INSERT INTO `jugadores` (`id`, `nombre`, `apellido`, `edad`, `posicion_id`, `dorsal`, `imgJugadores`) VALUES
+(1, 'Tomas', 'Marchiori', 29, 1, 1, 'tmarchiori.jpg'),
+(2, 'Randall', 'Rodriguez', 21, 1, 12, 'rrodriguez.jpg'),
+(3, 'Valentin', 'Gomez', 21, 2, 31, 'vgomez.jpg'),
+(4, 'Emanuel', 'Mammana', 29, 2, 2, 'emammana.jpg'),
+(5, 'Elías', 'Gomez', 30, 2, 3, 'egomez.jpg'),
+(6, 'Joaquin', 'Garcia', 23, 2, 4, 'jgarcia.jpg'),
+(7, 'Damian', 'Fernandez', 24, 2, 34, 'dfernandez.jpg'),
+(8, 'Agustin', 'Bouzat', 31, 3, 26, 'abouzat.jpg'),
+(9, 'Christian', 'Ordoñez', 20, 3, 32, 'cordonez.jpg'),
+(10, 'Matias', 'Pellegrini', 25, 3, 11, 'mpellegrini.jpg'),
+(11, 'Braian', 'Romero', 33, 4, 9, 'bromero.jpg'),
+(12, 'Francisco', 'Pizzini', 31, 4, 20, 'fpizzini.jgp');
 
 -- --------------------------------------------------------
 
@@ -84,34 +83,121 @@ INSERT INTO `jugadores` (`id`, `nombre`, `apellido`, `edad`, `posicion`, `trayec
 --
 
 CREATE TABLE `palmares` (
-  `id` int(11) NOT NULL,
   `torneos_locales` varchar(50) NOT NULL,
   `torneos_internacionales` varchar(50) NOT NULL,
-  `imgCopas` varchar(50) DEFAULT 'Proximamente'
+  `imgCopas` varchar(50) DEFAULT 'Proximamente',
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `palmares`
 --
 
-INSERT INTO `palmares` (`id`, `torneos_locales`, `torneos_internacionales`, `imgCopas`) VALUES
-(1, 'Torneo Nacional 1968', '', 'Proximamente'),
-(2, 'Torneo Clausura 1993', '', 'Proximamente'),
-(3, 'Torneo Apertura 1995', '', 'Proximamente'),
-(4, 'Torneo Clausura 1996', '', 'Proximamente'),
-(5, 'Torneo Clausura 1998', '', 'Proximamente'),
-(6, 'Torneo Clausura 2005', '', 'Proximamente'),
-(7, 'Torneo Clausura 2009', '', 'Proximamente'),
-(8, 'Torneo Clausura 2011', '', 'Proximamente'),
-(9, 'Torneo Inicial 2012', '', 'Proximamente'),
-(10, 'Fútbol Argentino 2012/2013', '', 'Proximamente'),
-(11, 'Supercopa Argentina 2014', '', 'Proximamente'),
-(12, 'Liga Profesional 2024', '', 'Proximamente'),
-(13, '', 'Copa Libertadores de América 1994', 'Proximamente'),
-(14, '', 'Copa Europeo-Sudamericana 1994', 'Proximamente'),
-(15, '', 'Copa Interamericana 1996', 'Proximamente'),
-(16, '', 'Supercopa 1996', 'Proximamente'),
-(17, '', 'Recopa Sudamericana 1997', 'Proximamente');
+INSERT INTO `palmares` (`torneos_locales`, `torneos_internacionales`, `imgCopas`, `id`) VALUES
+('Torneo Nacional 1968', '', 'Proximamente', 1),
+('Torneo Clausura\r\n1993', '', 'Proximamente', 2),
+('Torneo Apertura\r\n1995', '', 'Proximamente', 3),
+('Torneo Clausura\r\n1996', '', 'Proximamente', 4),
+('Torneo Clausura\r\n1998', '', 'Proximamente', 5),
+('Torneo Clausura\r\n2005', '', 'Proximamente', 6),
+('Torneo Clausura\r\n2009', '', 'Proximamente', 7),
+('Torneo Clausura\r\n2011', '', 'Proximamente', 8),
+('Torneo Inicial\r\n2012', '', 'Proximamente', 9),
+('Fútbol Argentino 2012/\r\n2013', '', 'Proximamente', 10),
+('Supercopa Argentina\r\n2014', '', 'Proximamente', 11),
+('Liga Profesional\r\n2024', '', 'Proximamente', 12),
+('', 'Copa Libertadores de América\r\n1994', 'Proximamente', 13),
+('', 'Copa Europeo-Sudamericana\r\n1994', 'Proximamente', 14),
+('', 'Copa Interamericana\r\n1996', 'Proximamente', 15),
+('', 'Supercopa\r\n1996', 'Proximamente', 16),
+('', 'Recopa Sudamericana\r\n1997', 'Proximamente', 17);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `posiciones`
+--
+
+CREATE TABLE `posiciones` (
+  `id` int(5) NOT NULL,
+  `nombre_posicion` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `posiciones`
+--
+
+INSERT INTO `posiciones` (`id`, `nombre_posicion`) VALUES
+(1, 'Arquero'),
+(2, 'Defensor'),
+(3, 'Mediocampista'),
+(4, 'Delantero');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `trayectorias`
+--
+
+CREATE TABLE `trayectorias` (
+  `id` int(11) NOT NULL,
+  `jugador_id` int(11) NOT NULL,
+  `club` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `trayectorias`
+--
+
+INSERT INTO `trayectorias` (`id`, `jugador_id`, `club`) VALUES
+(1, 1, 'Gimnasia y Esgrima Mendoza (2013-2021)'),
+(2, 1, 'Atlético Tucumán (2020-2021)'),
+(3, 1, 'Atlético Tucumán (2022-2023)'),
+(4, 1, 'Vélez Sarsfield (2024-actualidad)'),
+(5, 2, 'Peñarol (URU)'),
+(6, 2, 'Vélez Sarsfield'),
+(7, 3, 'Vélez Sarsfield'),
+(8, 4, 'River Plate'),
+(9, 4, 'Olimpique de Lyon (FRA)'),
+(10, 4, 'Zenit de San Petersburgo (RUS)'),
+(11, 4, 'P.F.C Sochi (RUS)'),
+(12, 4, 'Vélez Sarfield'),
+(13, 5, 'Rosario Central'),
+(14, 5, 'Defensa y Justicia'),
+(15, 5, 'Rosario Central'),
+(16, 5, 'Argentinos Juniors'),
+(17, 5, 'River Plate'),
+(18, 5, 'Vélez Sarsfield'),
+(19, 6, 'Vélez Sarsfield'),
+(20, 7, 'Vélez Sarsfield'),
+(21, 8, 'Liniers BB'),
+(22, 8, 'Boca Juniors'),
+(23, 8, 'Defensa y Justicia'),
+(24, 8, 'Boca Juniors'),
+(25, 8, 'Vélez Sarsfield'),
+(26, 8, 'Colo Colo (CHI)'),
+(27, 8, 'Vélez Sarsfield'),
+(28, 9, 'Vélez Sarsfield'),
+(29, 10, 'Estudiantes de La Plata'),
+(30, 10, 'Inter de Miami (USA)'),
+(31, 10, 'Estudiantes de La Plata'),
+(32, 10, 'New York City (USA)'),
+(33, 10, 'Vélez Sarsfield'),
+(34, 11, 'Acassuso'),
+(35, 11, 'Colón'),
+(36, 11, 'Argentinos Juniors'),
+(37, 11, 'Independiente'),
+(38, 11, 'Athletico Paranaense'),
+(39, 11, 'Defensa y Justicia'),
+(40, 11, 'River Plate'),
+(41, 11, 'Inter de Porto Alegre (BRA)'),
+(42, 11, 'Xolos Tijuana (MEX)'),
+(43, 11, 'Vélez Sarsfield'),
+(44, 12, 'Independiente'),
+(45, 12, 'Olimpo BB'),
+(46, 12, 'Defensa y Justicia'),
+(47, 12, 'Talleres Cba'),
+(48, 12, 'Vélez Sarsfield');
 
 --
 -- Índices para tablas volcadas
@@ -121,7 +207,8 @@ INSERT INTO `palmares` (`id`, `torneos_locales`, `torneos_internacionales`, `img
 -- Indices de la tabla `jugadores`
 --
 ALTER TABLE `jugadores`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `posicion_id` (`posicion_id`);
 
 --
 -- Indices de la tabla `palmares`
@@ -130,20 +217,55 @@ ALTER TABLE `palmares`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- Indices de la tabla `posiciones`
 --
+ALTER TABLE `posiciones`
+  ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de la tabla `jugadores`
+-- Indices de la tabla `trayectorias`
 --
-ALTER TABLE `jugadores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE `trayectorias`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jugador_id` (`jugador_id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
 
 --
 -- AUTO_INCREMENT de la tabla `palmares`
 --
 ALTER TABLE `palmares`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `posiciones`
+--
+ALTER TABLE `posiciones`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `trayectorias`
+--
+ALTER TABLE `trayectorias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `jugadores`
+--
+ALTER TABLE `jugadores`
+  ADD CONSTRAINT `jugadores_ibfk_1` FOREIGN KEY (`posicion_id`) REFERENCES `posiciones` (`id`);
+
+--
+-- Filtros para la tabla `trayectorias`
+--
+ALTER TABLE `trayectorias`
+  ADD CONSTRAINT `trayectorias_ibfk_1` FOREIGN KEY (`jugador_id`) REFERENCES `jugadores` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

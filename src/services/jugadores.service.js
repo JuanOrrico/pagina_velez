@@ -1,78 +1,94 @@
-const pool = require("../config/velez-db");
-// Get para toda la tabla jugadores
+const pool = require('../config/velez-db');
+
 exports.getAll = async () => {
   const [rows] = await pool.query(`
-        SELECT * FROM jugadores
-        `);
-  return rows;
+    SELECT 
+      j.id,
+      j.nombre,
+      j.apellido,
+      j.edad,
+      p.nombre_posicion AS posicion,
+      j.dorsal,
+      j.imgJugadores
+    FROM jugadores j
+    JOIN posiciones p ON j.posicion_id = p.id
+  `);
+
+ 
+  const [trayectorias] = await pool.query(`SELECT jugador_id, club FROM trayectorias`);
+  const mapTrayectorias = {};
+
+  trayectorias.forEach(({ jugador_id, club }) => {
+    if (!mapTrayectorias[jugador_id]) mapTrayectorias[jugador_id] = [];
+    mapTrayectorias[jugador_id].push(club);
+  });
+
+  return rows.map(j => ({
+    ...j,
+    trayectoria: mapTrayectorias[j.id] || []
+  }));
 };
 
-// Get para llamar por id a cada jugador
+
 exports.getById = async (id) => {
-  const [rows] = await pool.query(
-    `
-        SELECT nombre, apellido, edad, posicion, trayectoria, dorsal, imgJugadores FROM jugadores WHERE id = ?
-        `,
-    [id]
-  );
-  return rows[0];
-};
+  const [rows] = await pool.query(`
+    SELECT 
+      j.id,
+      j.nombre,
+      j.apellido,
+      j.edad,
+      p.nombre_posicion AS posicion,
+      j.dorsal,
+      j.imgJugadores
+    FROM jugadores j
+    JOIN posiciones p ON j.posicion_id = p.id
+    WHERE j.id = ?
+  `, [id]);
 
-// POST para agregar un jugador
-exports.create = async ({
-  nombre,
-  apellido,
-  edad,
-  posicion,
-  trayectoria,
-  dorsal,
-  imgJugadores,
-}) => {
-  const [result] = await pool.query(
-    `
-        INSERT INTO jugadores (nombre, apellido, edad, posicion, trayectoria, dorsal, imgJugadores) VALUES (?,?,?,?,?,?,?)`,
-    [nombre, apellido, edad, posicion, trayectoria, dorsal, imgJugadores]
-  );
+  if (rows.length === 0) return null;
+
+  const [trayectoria] = await pool.query(`SELECT club FROM trayectorias WHERE jugador_id = ?`, [id]);
+
   return {
-    id: result.insertId,
-    nombre,
-    apellido,
-    edad,
-    posicion,
-    trayectoria,
-    dorsal,
-    imgJugadores,
+    ...rows[0],
+    trayectoria: trayectoria.map(t => t.club)
   };
 };
 
-//PUT para actualizar un jugador
 
-exports.update = async (
-  id,
-  { nombre, apellido, edad, posicion, trayectoria, dorsal, imgJugadores }
-) => {
-  await pool.query(
-    `
-        UPDATE jugadores SET nombre = ? , apellido = ? , edad = ? , posicion = ?, trayectoria = ?, dorsal = ?, imgJugadores = ? WHERE id = ?
-        `,
-    [nombre, apellido, edad, posicion, trayectoria, dorsal, imgJugadores, id]
-  );
+exports.create = async ({ nombre, apellido, edad, posicion_id, dorsal, imgJugadores, trayectoria }) => {
+  const [result] = await pool.query(`
+    INSERT INTO jugadores (nombre, apellido, edad, posicion_id, dorsal, imgJugadores)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `, [nombre, apellido, edad, posicion_id, dorsal, imgJugadores]);
 
-  return {
-    id,
-    nombre,
-    apellido,
-    edad,
-    posicion,
-    trayectoria,
-    dorsal,
-    imgJugadores,
-  };
+  const jugadorId = result.insertId;
+
+  if (trayectoria && trayectoria.length > 0) {
+    const values = trayectoria.map(club => [jugadorId, club]);
+    await pool.query(`INSERT INTO trayectorias (jugador_id, club) VALUES ?`, [values]);
+  }
+
+  return jugadorId;
 };
 
-//DELETE un jugador
 
 exports.delete = async (id) => {
+  await pool.query(`DELETE FROM trayectorias WHERE jugador_id = ?`, [id]);
   await pool.query(`DELETE FROM jugadores WHERE id = ?`, [id]);
-  return { deleted: true };
+};
+
+
+exports.update = async (id, { nombre, apellido, edad, posicion_id, dorsal, imgJugadores, trayectoria }) => {
+  await pool.query(`
+    UPDATE jugadores SET nombre = ?, apellido = ?, edad = ?, posicion_id = ?, dorsal = ?, imgJugadores = ?
+    WHERE id = ?
+  `, [nombre, apellido, edad, posicion_id, dorsal, imgJugadores, id]);
+
+  await pool.query(`DELETE FROM trayectorias WHERE jugador_id = ?`, [id]);
+
+  if (trayectoria && trayectoria.length > 0) {
+    const values = trayectoria.map(club => [id, club]);
+    await pool.query(`INSERT INTO trayectorias (jugador_id, club) VALUES ?`, [values]);
+  }
 };
