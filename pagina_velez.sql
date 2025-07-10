@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-07-2025 a las 20:48:32
+-- Tiempo de generación: 10-07-2025 a las 20:52:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -74,7 +74,7 @@ INSERT INTO `jugadores` (`id`, `nombre`, `apellido`, `edad`, `posicion_id`, `dor
 (9, 'Christian', 'Ordoñez', 20, 3, 32, 'cordonez.jpg'),
 (10, 'Matias', 'Pellegrini', 25, 3, 11, 'mpellegrini.jpg'),
 (11, 'Braian', 'Romero', 33, 4, 9, 'bromero.jpg'),
-(12, 'Francisco', 'Pizzini', 31, 4, 20, 'fpizzini.jgp');
+(12, 'Francisco', 'Pizzini', 31, 4, 20, 'fpizzini.jpg');
 
 -- --------------------------------------------------------
 
@@ -85,32 +85,33 @@ INSERT INTO `jugadores` (`id`, `nombre`, `apellido`, `edad`, `posicion_id`, `dor
 CREATE TABLE `palmares` (
   `torneos_locales` varchar(50) NOT NULL,
   `torneos_internacionales` varchar(50) NOT NULL,
-  `imgCopas` varchar(50) DEFAULT 'Proximamente',
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `img_copas_locales` varchar(255) NOT NULL,
+  `img_copas_internacionales` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `palmares`
 --
 
-INSERT INTO `palmares` (`torneos_locales`, `torneos_internacionales`, `imgCopas`, `id`) VALUES
-('Torneo Nacional 1968', '', 'Proximamente', 1),
-('Torneo Clausura\r\n1993', '', 'Proximamente', 2),
-('Torneo Apertura\r\n1995', '', 'Proximamente', 3),
-('Torneo Clausura\r\n1996', '', 'Proximamente', 4),
-('Torneo Clausura\r\n1998', '', 'Proximamente', 5),
-('Torneo Clausura\r\n2005', '', 'Proximamente', 6),
-('Torneo Clausura\r\n2009', '', 'Proximamente', 7),
-('Torneo Clausura\r\n2011', '', 'Proximamente', 8),
-('Torneo Inicial\r\n2012', '', 'Proximamente', 9),
-('Fútbol Argentino 2012/\r\n2013', '', 'Proximamente', 10),
-('Supercopa Argentina\r\n2014', '', 'Proximamente', 11),
-('Liga Profesional\r\n2024', '', 'Proximamente', 12),
-('', 'Copa Libertadores de América\r\n1994', 'Proximamente', 13),
-('', 'Copa Europeo-Sudamericana\r\n1994', 'Proximamente', 14),
-('', 'Copa Interamericana\r\n1996', 'Proximamente', 15),
-('', 'Supercopa\r\n1996', 'Proximamente', 16),
-('', 'Recopa Sudamericana\r\n1997', 'Proximamente', 17);
+INSERT INTO `palmares` (`torneos_locales`, `torneos_internacionales`, `id`, `img_copas_locales`, `img_copas_internacionales`) VALUES
+('Torneo Nacional 1968', '', 1, 'Velez_1968.jpg', ''),
+('Torneo Clausura\r\n1993', '', 2, 'Velez_1993.jpg', ''),
+('Torneo Apertura\r\n1995', '', 3, 'velez_1995.jpg', ''),
+('Torneo Clausura\r\n1996', '', 4, 'velez_clausura96.jpg', ''),
+('Torneo Clausura\r\n1998', '', 5, 'velez_clausura98.jpg', ''),
+('Torneo Clausura\r\n2005', '', 6, 'velez_2005.jpg', ''),
+('Torneo Clausura\r\n2009', '', 7, 'velez_2009.jpg', ''),
+('Torneo Clausura\r\n2011', '', 8, 'velez_2011.jpg', ''),
+('Torneo Inicial\r\n2012', '', 9, 'velez_2012.jpg', ''),
+('Fútbol Argentino 2012/\r\n2013', '', 10, 'velez_2013.jpg', ''),
+('Supercopa Argentina\r\n2014', '', 11, 'velez_sc_2013.jpg', ''),
+('Liga Profesional\r\n2024', '', 12, 'velez_2024.jpg', ''),
+('', 'Copa Libertadores de América\r\n1994', 13, '', 'velez_libertadores.jpg'),
+('', 'Copa Europeo-Sudamericana\r\n1994', 14, '', 'velez_intercontinental.jpg'),
+('', 'Copa Interamericana\r\n1996', 15, '', 'velez_interamericana96.jpg'),
+('', 'Supercopa\r\n1996', 16, '', 'velez_supercopa96.jpg'),
+('', 'Recopa Sudamericana\r\n1997', 17, '', 'velez_recopa97.jpg');
 
 -- --------------------------------------------------------
 

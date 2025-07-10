@@ -1,5 +1,8 @@
 const pool = require('../config/velez-db');
 
+const API_PORT = process.env.PORT || 4000;
+const API_BASE_URL = `http://localhost:${API_PORT}`;
+
 exports.getAll = async () => {
   const [rows] = await pool.query(`
     SELECT 
@@ -14,19 +17,30 @@ exports.getAll = async () => {
     JOIN posiciones p ON j.posicion_id = p.id
   `);
 
- 
-  const [trayectorias] = await pool.query(`SELECT jugador_id, club FROM trayectorias`);
+  
+
+const [trayectorias] = await pool.query(`SELECT jugador_id, club FROM trayectorias`);
   const mapTrayectorias = {};
+
 
   trayectorias.forEach(({ jugador_id, club }) => {
     if (!mapTrayectorias[jugador_id]) mapTrayectorias[jugador_id] = [];
     mapTrayectorias[jugador_id].push(club);
   });
 
-  return rows.map(j => ({
-    ...j,
-    trayectoria: mapTrayectorias[j.id] || []
-  }));
+  
+  return rows.map(jugador => {
+   
+    const imageUrl = jugador.imgJugadores
+      ? `${API_BASE_URL}/img/${jugador.imgJugadores}`
+      : null; 
+
+    return {
+      ...jugador,
+      trayectoria: (mapTrayectorias[jugador.id] || []).join(', '), 
+      imagen_url: imageUrl 
+    };
+  });
 };
 
 
