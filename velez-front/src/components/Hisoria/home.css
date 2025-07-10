@@ -1,0 +1,13 @@
+.historia-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 50px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.historia-container p{
+    padding: 20px;
+    margin: 25px;
+}
