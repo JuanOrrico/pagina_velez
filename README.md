@@ -19,6 +19,7 @@ El proyecto permite realizar operaciones CRUD sobre la información del club a t
 - MySQL2
 - dotenv
 - nodemon
+- cors
 
 ## 🔧 Instalación
 
